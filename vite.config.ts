@@ -4,7 +4,7 @@ import path from 'path'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import VueMacros from 'unplugin-vue-macros/vite'
-import VueRouter from 'unplugin-vue-router/vite'
+import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
 
 // https://vitejs.dev/config/
@@ -15,10 +15,18 @@ export default defineConfig({
     }
   },
   plugins: [
+    // https://github.com/vue-macros/vue-macros
+    VueMacros({
+      plugins: {
+        vue: vue({
+          include: [/\.vue$/],
+        })
+      }
+    }),
     // https://github.com/antfu/unplugin-vue-components
     Components({
       extensions: ['vue'],
-      include: [/\.vue$/, /\.vue\?vue/],
+      include: [/\.vue$/],
       dts: 'src/components.d.ts',
     }),
      // https://github.com/unplugin/unplugin-auto-import
@@ -31,20 +39,13 @@ export default defineConfig({
        dts: 'src/auto-imports.d.ts',
        vueTemplate: true,
     }),
-    // https://github.com/vue-macros/vue-macros
-    VueMacros({
-      plugins: {
-        vue: vue({
-          include: [/\.vue$/, /\.vue\?vue/],
-        })
-      }
-    }),
-    // https://github.com/posva/unplugin-vue-router
-    VueRouter({
-      extensions: ['.vue'],
+    // https://github.com/hannoeru/vite-plugin-pages
+    Pages({
+      extensions: ['vue'],
+      dirs: 'src/pages',
     }),
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
-    Layouts()
+    Layouts(),
   ],
   server: {
     host: '0.0.0.0',

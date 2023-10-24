@@ -6,8 +6,8 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
 
-    /* Bundler mode */
-    "moduleResolution": "bundler",
+    /* node mode */
+    "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -20,11 +20,16 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
+    /* 插件类型 */
+    "types": [
+      "vite-plugin-pages/client",
+      "vite-plugin-vue-layouts/client",
+    ],
+
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
-  "references": [{ "path": "./tsconfig.node.json" }]
 }
