@@ -34,7 +34,10 @@ export default defineConfig({
        imports: [
         'vue',
         'vue-router',
-        'pinia'
+        'pinia',
+        {
+          'axios':[['default', 'axios']],
+        }
       ],
        dts: 'src/auto-imports.d.ts',
        vueTemplate: true,
