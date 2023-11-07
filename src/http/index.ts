@@ -2,23 +2,24 @@ import type { AxiosResponse, InternalAxiosRequestConfig } from "axios"
 
 type IRequestInterceptors = (
   value: InternalAxiosRequestConfig
-  ) => InternalAxiosRequestConfig
+) => InternalAxiosRequestConfig
 type IResponseInterceptors = (
   res: AxiosResponse
-  ) => AxiosResponse | Promise<Error>
-  
+) => AxiosResponse | Promise<Error>
+
 class HttpClint {
   private instance = axios.create({
     baseURL: "http://localhost:3000",
     timeout: 5000,
   })
 
-  constructor () {
+  constructor() {
     this.interceptors()
   }
 
   /**
    * 请求拦截列表
+   * 如：设置token
    */
   private requestInterceptorsList: IRequestInterceptors[] = [
     (config) => {
@@ -31,6 +32,7 @@ class HttpClint {
 
   /**
    * 响应拦截列表
+   * 如：统一错误处理
    */
   private responseInterceptorsList: IResponseInterceptors[] = [
     (res) => {
@@ -47,16 +49,20 @@ class HttpClint {
       return res
     }
   ]
-
-  private interceptors () {
-    this.instance.interceptors.request.use((config) => {
-      this.requestInterceptorsList.forEach((item) => {
-        config = item(config)
+  /**
+   * 请求/响应拦截器
+   */
+  private interceptors() {
+    this.instance.interceptors.request.use(
+      (config) => {
+        this.requestInterceptorsList.forEach((item) => {
+          console.log('1222223232323232323232323212222232323232323232323232122222323232323232323232321222223232323232323232323212222232323232323232323232')
+        })
+        return config
+      },
+      (err) => {
+        return Promise.reject(err)
       })
-      return config
-    }, (err) => {
-      return Promise.reject(err)
-    })
 
     this.instance.interceptors.response.use((res) => {
       this.responseInterceptorsList.forEach((item) => {
